@@ -11,21 +11,26 @@ import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import Home from './screens/Home';
 // import { store } from './store/store';
 import { registerRootComponent } from 'expo';
+import Welcome from './screens/Welcome';
 
 const Stack = createNativeStackNavigator();
 
 function Main() {
   
-  return (
-      <NavigationContainer>
-          <Stack.Navigator screenOptions={{headerShown: false}}>
-              <Stack.Screen
-                  name="Home"
-                  component={Home}
-              />
-          </Stack.Navigator>
-      </NavigationContainer>
-  );
+    return (
+        <NavigationContainer>
+            <Stack.Navigator screenOptions={{headerShown: false}}>
+                <Stack.Screen
+                    name="Welcome"
+                    component={Welcome}
+                />
+                <Stack.Screen
+                    name="Home"
+                    component={Home}
+                />
+            </Stack.Navigator>
+        </NavigationContainer>
+    );
 }
 
 export default function App() {
@@ -34,7 +39,8 @@ export default function App() {
           app: {
               orange: "#F19811",
               lime: "#D7E251",
-              dark: "#888A87"
+              dark: "#888A87",
+              blue: "#"
           },
           orange: {
               100: "#F19811"
@@ -47,15 +53,15 @@ export default function App() {
 
   return (
         <>
-        <StatusBar style="dark" />
-        <NativeBaseProvider
-            theme={theme}
-            isSSR={false}
-        >
-            <BottomSheetModalProvider>
-                <Main />
-            </BottomSheetModalProvider>
-        </NativeBaseProvider>
+            <StatusBar style="dark" />
+            <NativeBaseProvider
+                theme={theme}
+                isSSR={false}
+            >
+                <BottomSheetModalProvider>
+                    <Main />
+                </BottomSheetModalProvider>
+            </NativeBaseProvider>
         </>
       
   );

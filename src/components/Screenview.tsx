@@ -1,20 +1,24 @@
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native'
+import { ImageBackground, SafeAreaView, StyleSheet, Text, View } from 'react-native'
 import React, { ReactNode } from 'react'
+import { BlurView } from '@candlefinance/blur-view';
 
 type ScreenViewProps = {
     title: string;
     leftIcon: JSX.Element | null;
     rightIcon: JSX.Element | null;
     children: ReactNode;
+    backgroundImagePath: string | undefined;
+    backgroundColor: string;
+    blur: boolean;
 }
 
 /**
  * @description Reusable Component to encompass a screen and have a header component 
  * @author Matt
  */
-function Screenview({rightIcon, leftIcon, title, children}: ScreenViewProps){
+function Screenview({rightIcon, leftIcon, title, children, backgroundColor, backgroundImagePath, blur}: ScreenViewProps){
     return (
-        <SafeAreaView style={{height: "100%"}}>
+        <SafeAreaView style={{height: "100%", backgroundColor: backgroundColor}}>
             <View
             style={styles.headerContainer}
             >
@@ -22,9 +26,29 @@ function Screenview({rightIcon, leftIcon, title, children}: ScreenViewProps){
                 <Text style={styles.headerText}>{title}</Text>
                 <View style={styles.iconContainers}>{rightIcon}</View>
             </View>
-            {
-                children
-            }
+            <View style={{flex: 1}}>
+                {/* Background image */}
+                
+                {
+                    backgroundImagePath ?
+                    <>
+                        <ImageBackground source={require( `../../assets/background.png` )} style={styles.backgroundImage}>
+                            {/* Blur overlay */}
+                            {
+                                children
+                            }
+                        </ImageBackground>
+                    </>
+                    
+                    :
+
+                    <>
+                        {
+                            children
+                        }
+                    </>
+                }
+            </View>
         </SafeAreaView>
     )
 }
@@ -46,7 +70,16 @@ const styles = StyleSheet.create({
         alignItems: "center",
         marginBottom: 15,
         justifyContent: "space-between",
-        paddingHorizontal: 17,
+        paddingHorizontal: 20,
         width: "auto"
-    }
+    },
+    backgroundImage: {
+        flex: 1,
+        resizeMode: 'cover', // or 'stretch' or 'contain'
+        justifyContent: 'center',
+    },
+    blurOverlay: {
+        flex: 1,
+        backgroundColor: 'rgba(0,0,0,0.5)', // Semi-transparent black
+    },
 })

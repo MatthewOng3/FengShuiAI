@@ -18,9 +18,6 @@ const restClient = new RestClient(
 
 function Home({navigation}){
 
-    // const dispatch = useDispatch<AppDispatch>();
-    // const [infoModal, setInfoModal] = useState<boolean>(false);
-    
     async function uploadImage(mode: string) {
         try {
             let result: ImagePicker.ImagePickerResult;

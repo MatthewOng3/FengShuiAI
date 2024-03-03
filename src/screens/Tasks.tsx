@@ -22,7 +22,7 @@ const TypingText = () => {
     <View style={styles.background}>
       <View style={styles.container}>
         <Image
-          source={require('../assets/drawer.jpg')}
+          source={require('../../assets/drawer.jpg')}
           style={{ width: '100%', height: 200 }}
         />
         <Text style={styles.title}>Bedroom Feng Shui Checklist</Text>

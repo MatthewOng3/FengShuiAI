@@ -13,6 +13,8 @@ import Home from './screens/Home';
 import { registerRootComponent } from 'expo';
 import Welcome from './screens/Welcome';
 import ObjectDetection from './screens/ObjectDetection';
+import SelectionScreen from './screens/Selection';
+import TypingText from './screens/Tasks';
 
 const Stack = createNativeStackNavigator();
 
@@ -21,6 +23,7 @@ function Main() {
     return (
         <NavigationContainer>
             <Stack.Navigator screenOptions={{headerShown: false}}>
+               
                 <Stack.Screen
                     name="Welcome"
                     component={Welcome}
@@ -32,6 +35,14 @@ function Main() {
                 <Stack.Screen
                     name="ObjectDetection"
                     component={ObjectDetection}
+                />
+                <Stack.Screen
+                    name="Selection"
+                    component={SelectionScreen}
+                />
+                <Stack.Screen
+                    name="Tasks"
+                    component={TypingText}
                 />
             </Stack.Navigator>
         </NavigationContainer>

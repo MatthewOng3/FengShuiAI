@@ -12,6 +12,7 @@ import Home from './screens/Home';
 // import { store } from './store/store';
 import { registerRootComponent } from 'expo';
 import Welcome from './screens/Welcome';
+import ObjectDetection from './screens/ObjectDetection';
 
 const Stack = createNativeStackNavigator();
 
@@ -27,6 +28,10 @@ function Main() {
                 <Stack.Screen
                     name="Home"
                     component={Home}
+                />
+                <Stack.Screen
+                    name="ObjectDetection"
+                    component={ObjectDetection}
                 />
             </Stack.Navigator>
         </NavigationContainer>

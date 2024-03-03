@@ -7,12 +7,20 @@ import { useDispatch } from 'react-redux';
 import * as ImagePicker from "expo-image-picker";
 import * as FileSystem from "expo-file-system";
 import axios from 'axios'
+import { RestClient } from '../util/RestClient';
 
-function Home(){
+const restClient = new RestClient(
+    axios.create({
+        baseURL: `https://a0f1-180-150-39-111.ngrok-free.app/api`
+    })
+);
+
+
+function Home({navigation}){
 
     // const dispatch = useDispatch<AppDispatch>();
     // const [infoModal, setInfoModal] = useState<boolean>(false);
-
+    
     async function uploadImage(mode: string) {
         try {
             let result: ImagePicker.ImagePickerResult;
@@ -38,6 +46,7 @@ function Home(){
                         quality: 1
                     });
                 }
+                
                 //If can't be asked again and permission was not granted
                 else if (!response.canAskAgain && !response.granted) {
                     //Display a popup directing to enable permission
@@ -55,35 +64,38 @@ function Home(){
     }
 
     async function saveImage(image: ImagePicker.ImagePickerAsset) {
-        
-        console.log(image)
-        const base64String = await FileSystem.readAsStringAsync(
-            image.uri,
-            {
-                encoding: "base64"
+        try{
+            
+            const base64String = await FileSystem.readAsStringAsync(
+                image.uri,
+                {
+                    encoding: "base64"
+                }
+            );
+            
+            const response = await restClient.get(`/google/object-detection`, {
+                data: {
+                    image: base64String
+                },
+                headers: {
+                    "Content-Type": "application/json"
+                }
+                
+            });
+            
+            if(response.data){
+                navigation.navigate('ObjectDetection', {detectedObjects: response.data})
             }
-        );
-
-        const response = await axios.get('https://pecf27ctocane7vz6ba3jq6u3a0jazcy.lambda-url.ap-southeast-2.on.aws/', {
-            data:{
-                image: base64String
-            },
-            headers: {
-                'Content-Type': 'application/json', // Set the content type according to your image format
-            },
-        }); 
-        
-        console.log(response.data)
+        }
+        catch(e){
+            console.log(e)
+        }
 
     }
-
-    // function closeModal() {
-    //     setInfoModal(false);
-    // }
-
+    
     return (
       <Screenview title='Scan Room' leftIcon={<></>}
-      rightIcon={<></>} backgroundColor='white'>
+        rightIcon={<></>} backgroundColor='white' backgroundImagePath={''} >
         <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
           <Button leftIcon={<Icon as={FontAwesome} name="photo" size="sm" />}
           onPress={() => uploadImage("")}>

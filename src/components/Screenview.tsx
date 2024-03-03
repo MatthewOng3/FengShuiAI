@@ -9,16 +9,17 @@ type ScreenViewProps = {
     children: ReactNode;
     backgroundImagePath: string | undefined;
     backgroundColor: string;
-    blur: boolean;
 }
 
 /**
  * @description Reusable Component to encompass a screen and have a header component 
  * @author Matt
  */
-function Screenview({rightIcon, leftIcon, title, children, backgroundColor, backgroundImagePath, blur}: ScreenViewProps){
+function Screenview({rightIcon, leftIcon, title, children, backgroundColor, backgroundImagePath}: ScreenViewProps){
+
     return (
         <SafeAreaView style={{height: "100%", backgroundColor: backgroundColor}}>
+
             <View
             style={styles.headerContainer}
             >
@@ -26,13 +27,14 @@ function Screenview({rightIcon, leftIcon, title, children, backgroundColor, back
                 <Text style={styles.headerText}>{title}</Text>
                 <View style={styles.iconContainers}>{rightIcon}</View>
             </View>
+            
             <View style={{flex: 1}}>
                 {/* Background image */}
                 
                 {
                     backgroundImagePath ?
                     <>
-                        <ImageBackground source={require( `../../assets/background.png` )} style={styles.backgroundImage}>
+                        <ImageBackground source={require( `../../assets/image_background.png` )} style={styles.backgroundImage}>
                             {/* Blur overlay */}
                             {
                                 children
@@ -41,7 +43,7 @@ function Screenview({rightIcon, leftIcon, title, children, backgroundColor, back
                     </>
                     
                     :
-
+                    
                     <>
                         {
                             children
